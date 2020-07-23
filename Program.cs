@@ -15,9 +15,9 @@ namespace DemoBinaryClassifier
         {
             /// Обработаем входные данные
 
-            string busDirectory = Path.Combine(@"..\..\..\..\","DATA", "bus");
-            string nobusDirectory = Path.Combine(@"..\..\..\..\","DATA", "no_bus");
-            string tf = Path.Combine(@"..\..\..\..\","tf", "tf.pb");
+            string busDirectory = Path.Combine(@"..\..\..\","DATA", "bus");
+            string nobusDirectory = Path.Combine(@"..\..\..\","DATA", "no_bus");
+            string tf = Path.Combine(@"..\..\..\","tf", "tf.pb");
 
 
             var bus = Directory.GetFiles(busDirectory).Select(x => new InputModel() { ImagePath = x, IsBus = true }).OrderBy(x => Guid.NewGuid()).Take(100);
@@ -51,10 +51,10 @@ namespace DemoBinaryClassifier
 
             Console.WriteLine($"Accuracy = {metrics.Accuracy}");
 
-            //Test(context, model, usedData.TestSet);
+            Test(context, model, usedData.TestSet);
             context.Model.Save(model, null, "model.zip");
             Console.ReadLine();
-            context.Model.Load("model.zip", out var schema);
+            //context.Model.Load("model.zip", out var schema);
         }
 
         private static void Test(MLContext context, TransformerChain<BinaryPredictionTransformer<CalibratedModelParametersBase<LinearBinaryModelParameters, PlattCalibrator>>> model, IDataView testSet)
